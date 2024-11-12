@@ -1,2 +1,7 @@
 # golang-study
-make this to understend golang
+curso de golang
+
+1 - fundamentos da linguagem
+    - pacotes
+    - variaveis
+    - tipos de dados
