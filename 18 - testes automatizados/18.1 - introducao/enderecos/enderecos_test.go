@@ -2,9 +2,7 @@
 
 package enderecos
 
-import (
-	"testing"
-)
+import "testing"
 
 type cenarioDeTeste struct {
 	enderecoInserido string
@@ -12,6 +10,7 @@ type cenarioDeTeste struct {
 }
 
 func TestTipoDeEndereco(t *testing.T) {
+	t.Parallel()
 	// Test
 	// enderecoParaTeste := "Avenida Paulista"
 
@@ -37,5 +36,16 @@ func TestTipoDeEndereco(t *testing.T) {
 				cenario.retornoEsperado,
 			)
 		}
+	}
+}
+
+// go test --coverprofile cobertura.txt = gera um arquivo.txt com informacoes do resultado do teste
+// go tool cover --func=cobertura.txt = deixa mais facil de ler o arquivo.txt no terminal
+// go tool cover --html=cobertura.txt = gera um arquivo HTML
+
+func TestQualquer(t *testing.T) {
+	t.Parallel()
+	if 1 > 2 {
+		t.Errorf("Teste quebrou!")
 	}
 }
