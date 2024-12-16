@@ -29,5 +29,6 @@ func main() {
 		log.Fatal(erro)
 	}
 	defer linhas.Close()
+
 	fmt.Println(linhas)
 }
