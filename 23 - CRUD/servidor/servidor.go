@@ -133,3 +133,8 @@ func BuscarUsuario(w http.ResponseWriter, r *http.Request) {
 
 	defer db.Close()
 }
+
+// AtualizaUsuario altera os dados de um usuario no banco de dados
+func AtualizarUsuario(w http.ResponseWriter, r *http.Request) {
+
+}

@@ -28,6 +28,23 @@ curso de golang (Aprenda Go (Golang) do zero, 100% na pr√°tica e com uma aplica√
     15. metodos
     16. interfaces
      - 16.1 - formas
-     - 16.2 - tipos genericos 
+     - 16.2 - tipos genericos
+    17. concorencia
+     - 17-1. goroutine
+     - 17-2. wait group
+     - 17-3. channels
+     - 17-4. channel buffer
+     - 17-5. select
+     - 17-6. padroes de concorencia
+    18. testes automatizados
+     - 18-1. introducao
+     - 18.2 teste avancado
+    19. JSON
+     - 19-1. Marshal
+     - 19-2. UnMarshal
+    20. HTTP
+    21. HTML
+    22. SQL
+    23. CRUD
 
 
