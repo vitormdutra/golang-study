@@ -16,7 +16,8 @@ func main() {
 	router.HandleFunc("/usuarios", servidor.BuscarUsuarios).Methods("GET")
 	router.HandleFunc("/usuarios/{id}", servidor.BuscarUsuario).Methods("GET")
 	router.HandleFunc("/usuarios/{id}", servidor.AtualizarUsuario).Methods("PUT")
+	router.HandleFunc("/usuarios/{id}", servidor.DeletarUsuario).Methods("DELETE")
 
-	fmt.Println("Escutando na prta 1234")
+	fmt.Println("Escutando na porta 1234")
 	log.Fatal(http.ListenAndServe(":1234", router))
 }

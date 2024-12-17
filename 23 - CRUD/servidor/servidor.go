@@ -94,7 +94,7 @@ func BuscarUsuarios(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
-// BuscarUsuarios traz um usuario do selecionado do bando de dados
+// BuscarUsuario traz um usuario do selecionado do bando de dados
 func BuscarUsuario(w http.ResponseWriter, r *http.Request) {
 	parametros := mux.Vars(r)
 
@@ -134,7 +134,80 @@ func BuscarUsuario(w http.ResponseWriter, r *http.Request) {
 	defer db.Close()
 }
 
-// AtualizaUsuario altera os dados de um usuario no banco de dados
+// AtualizarUsuario altera os dados de um usuario no banco de dados
 func AtualizarUsuario(w http.ResponseWriter, r *http.Request) {
+	parametros := mux.Vars(r)
 
+	ID, err := strconv.ParseUint(parametros["id"], 10, 64)
+	if err != nil {
+		w.WriteHeader(http.StatusBadRequest)
+		w.Write([]byte("Erro ao obter o id inserido!"))
+		return
+	}
+	corpoRequesicao, erro := ioutil.ReadAll(r.Body)
+	if erro != nil {
+		w.WriteHeader(http.StatusBadRequest)
+		w.Write([]byte("Erro ao ler o corpo da requisicao"))
+		return
+	}
+	var usuario usuario
+	if err := json.Unmarshal(corpoRequesicao, &usuario); err != nil {
+		w.WriteHeader(http.StatusBadRequest)
+		w.Write([]byte("Erro ao converter usuario para struct"))
+		return
+	}
+	db, err := banco.Conectar()
+	if err != nil {
+		w.Write([]byte("Erro ao conectar com banco"))
+		return
+	}
+
+	statement, err := db.Prepare("update usuarios set nome = ?, email = ? where id = ?")
+	if err != nil {
+		w.WriteHeader(http.StatusBadRequest)
+		w.Write([]byte("Erro ao criar o statment!"))
+		return
+	}
+	defer statement.Close()
+
+	if _, err := statement.Exec(usuario.Nome, usuario.Email, ID); err != nil {
+		w.WriteHeader(http.StatusBadRequest)
+		w.Write([]byte("Erro ao executar o statment!"))
+		return
+	}
+	w.WriteHeader(http.StatusNoContent)
+}
+
+// DeletarUsuario deleta usuario do banco de dados
+func DeletarUsuario(w http.ResponseWriter, r *http.Request) {
+	parametros := mux.Vars(r)
+
+	ID, err := strconv.ParseUint(parametros["id"], 10, 64)
+	if err != nil {
+		w.WriteHeader(http.StatusBadRequest)
+		w.Write([]byte("Erro ao obter o id inserido!"))
+		return
+	}
+
+	db, err := banco.Conectar()
+	if err != nil {
+		w.Write([]byte("Erro ao conectar com banco"))
+		return
+	}
+	defer db.Close()
+
+	statement, err := db.Prepare("delete from usuarios where id = ?")
+	if err != nil {
+		w.WriteHeader(http.StatusBadRequest)
+		w.Write([]byte("Erro ao criar o statment!"))
+		return
+	}
+	defer statement.Close()
+
+	if _, err := statement.Exec(ID); err != nil {
+		w.WriteHeader(http.StatusBadRequest)
+		w.Write([]byte("Erro ao executar o statment!"))
+		return
+	}
+	w.WriteHeader(http.StatusNoContent)
 }
